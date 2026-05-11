@@ -20,8 +20,8 @@ st.title("🌍 Smart AQI Monitoring Dashboard")
 # FASTAPI URL
 # =========================
 
-API_URL = "https://aqi-fastapi-1.onrender.com/latest"
-
+API_URL = "https://aqi-predict-rf.onrender.com/latest"
+#https://aqi-predict-rf.onrender.com/
 # =========================
 # SESSION STORAGE
 # =========================
