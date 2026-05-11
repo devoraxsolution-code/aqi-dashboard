@@ -21,7 +21,7 @@ st.title("🌍 Smart AQI Monitoring Dashboard")
 # =========================
 
 API_URL = "https://aqi-predict-rf.onrender.com/latest"
-#https://aqi-predict-rf.onrender.com/
+
 # =========================
 # SESSION STORAGE
 # =========================
@@ -65,11 +65,11 @@ if data:
 
         "humidity": data.get("humidity", 0),
 
-        "dust": data.get("dust", 0),
+        "Dust": data.get("dust", 0),
 
         "Atmospheric Gases": data.get("mq135", 0),
 
-        "CO": data.get("mq2", 0),
+        "Carbon Monoxide": data.get("mq2", 0),
 
         "current_aqi": data.get("current_aqi", 0),
 
@@ -147,17 +147,17 @@ c2.metric(
 
 c3.metric(
     "Dust",
-    round(data.get("dust", 0), 2)
+    f'{round(data.get("dust", 0), 2)} ppm'
 )
 
 c4.metric(
     "Atmospheric Gases",
-    round(data.get("mq135", 0), 2)
+    f'{round(data.get("mq135", 0), 2)} ppm'
 )
 
 c5.metric(
-    "CO",
-    round(data.get("mq2", 0), 2)
+    "Carbon Monoxide",
+    f'{round(data.get("mq2", 0), 2)} ppm'
 )
 
 # =========================
@@ -205,9 +205,9 @@ sensor_fig = px.line(
     y=[
         "temperature",
         "humidity",
-        "dust",
+        "Dust",
         "Atmospheric Gases",
-        "CO"
+        "Carbon Monoxide"
     ],
 
     markers=True
