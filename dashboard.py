@@ -2,7 +2,7 @@ import streamlit as st
 import requests
 import pandas as pd
 import plotly.express as px
-from datetime import datetime
+from datetime import datetime, timedelta
 import time
 
 # =========================
@@ -52,9 +52,14 @@ except Exception as e:
 
 if data:
 
+    ist_time = (
+        datetime.utcnow() +
+        timedelta(hours=5, minutes=30)
+    ).strftime("%H:%M:%S")
+
     st.session_state.history.append({
 
-        "time": datetime.now().strftime("%H:%M:%S"),
+        "time": ist_time,
 
         "temperature": data.get("temperature", 0),
 
@@ -62,9 +67,9 @@ if data:
 
         "dust": data.get("dust", 0),
 
-        "mq135": data.get("mq135", 0),
+        "Atmospheric Gases": data.get("mq135", 0),
 
-        "mq2": data.get("mq2", 0),
+        "CO": data.get("mq2", 0),
 
         "current_aqi": data.get("current_aqi", 0),
 
@@ -78,21 +83,27 @@ if data:
 current_aqi = data.get("current_aqi", 0)
 
 if current_aqi <= 50:
+
     category = "Good"
 
 elif current_aqi <= 100:
+
     category = "Satisfactory"
 
 elif current_aqi <= 200:
+
     category = "Moderate"
 
 elif current_aqi <= 300:
+
     category = "Poor"
 
 elif current_aqi <= 400:
+
     category = "Very Poor"
 
 else:
+
     category = "Severe"
 
 # =========================
@@ -140,12 +151,12 @@ c3.metric(
 )
 
 c4.metric(
-    "MQ135",
+    "Atmospheric Gases",
     round(data.get("mq135", 0), 2)
 )
 
 c5.metric(
-    "MQ2",
+    "CO",
     round(data.get("mq2", 0), 2)
 )
 
@@ -195,11 +206,15 @@ sensor_fig = px.line(
         "temperature",
         "humidity",
         "dust",
-        "mq135",
-        "mq2"
+        "Atmospheric Gases",
+        "CO"
     ],
 
     markers=True
+)
+
+sensor_fig.update_layout(
+    legend_title="Sensors"
 )
 
 st.plotly_chart(
